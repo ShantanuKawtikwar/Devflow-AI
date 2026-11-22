@@ -29,9 +29,9 @@ export function Modal({
   const sizes = {
     sm: 'max-w-sm',
     md: 'max-w-md',
-    lg: 'max-w-lg',
-    xl: 'max-w-xl',
-    full: 'max-w-4xl',
+    lg: 'max-w-2xl',
+    xl: 'max-w-4xl',
+    full: 'max-w-[90vw]',
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -51,6 +51,7 @@ export function Modal({
             className="fixed inset-0 bg-black/50 z-50"
             onClick={closeOnOverlayClick ? onClose : undefined}
             aria-hidden="true"
+            data-testid="modal-overlay"
           />
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -60,7 +61,6 @@ export function Modal({
               'fixed inset-0 z-50 flex items-center justify-center p-4',
               'pointer-events-none'
             )}
-            onClick={closeOnOverlayClick ? onClose : undefined}
             role="dialog"
             aria-modal="true"
             aria-labelledby={title ? 'modal-title' : undefined}
@@ -71,7 +71,11 @@ export function Modal({
                 'w-full bg-white dark:bg-neutral-900 rounded-xl shadow-xl pointer-events-auto',
                 sizes[size]
               )}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => {
+              e.stopPropagation();
+              e.nativeEvent.stopImmediatePropagation?.();
+            }}
+              data-testid="modal-content"
             >
               {(title || showCloseButton) && (
                 <div className="flex items-start justify-between p-6 border-b border-neutral-200 dark:border-neutral-800">

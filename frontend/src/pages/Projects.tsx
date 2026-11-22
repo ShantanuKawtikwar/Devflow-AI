@@ -13,12 +13,12 @@ import {
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { cn, formatDate, getProjectStatusColor, getPriorityColor } from '../../utils/helpers';
-import { projectsApi } from '../../services/api';
-import { Project, ProjectStatus, ProjectPriority } from '../../types';
-import { Button } from '../common/Button';
-import { Input } from '../common/Input';
-import { Modal } from '../common/Modal';
+import { cn, formatDate, getProjectStatusColor, getPriorityColor } from '@/utils/helpers';
+import { projectsApi } from '@/services/api';
+import { Project, ProjectStatus, ProjectPriority } from '@/types';
+import { Button } from '@/components/common/Button';
+import { Input } from '@/components/common/Input';
+import { Modal } from '@/components/common/Modal';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -167,7 +167,7 @@ export function Projects() {
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="card p-6 animate-pulse">
+            <div key={i} className="card p-6 animate-pulse" data-testid="skeleton-card">
               <div className="h-6 bg-neutral-200 dark:bg-neutral-700 rounded w-3/4 mb-4" />
               <div className="h-4 bg-neutral-200 dark:bg-neutral-700 rounded w-1/2 mb-2" />
               <div className="h-4 bg-neutral-200 dark:bg-neutral-700 rounded w-1/3" />

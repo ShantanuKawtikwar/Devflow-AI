@@ -8,9 +8,11 @@ import { tasksApi } from '../../services/api';
 interface TaskCardProps {
   task: Task;
   onClick: () => void;
+  onDragStart?: (e: React.DragEvent) => void;
+  onDragEnd?: (e: React.DragEvent) => void;
 }
 
-export function TaskCard({ task, onClick }: TaskCardProps) {
+export function TaskCard({ task, onClick, onDragStart, onDragEnd }: TaskCardProps) {
   const queryClient = useQueryClient();
 
   const { mutate: updateTask } = useMutation({
@@ -43,6 +45,9 @@ export function TaskCard({ task, onClick }: TaskCardProps) {
       onKeyDown={(e) => e.key === 'Enter' && onClick()}
       role="button"
       aria-label={task.title}
+      draggable
+      onDragStart={(e) => onDragStart(e)}
+      onDragEnd={(e) => onDragEnd(e)}
     >
       {/* Priority indicator */}
       <div className={cn('w-full h-1 rounded-t-lg mb-3', getPriorityColor(task.priority).replace('badge', 'bg'))} />

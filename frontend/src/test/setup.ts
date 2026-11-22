@@ -1,5 +1,27 @@
 import '@testing-library/jest-dom';
 import { vi } from 'vitest';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactNode } from 'react';
+import { render, RenderOptions } from '@testing-library/react';
+
+// Create a wrapper with QueryClientProvider
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
+
+const wrapper = ({ children }: { children: ReactNode }) => (
+  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+);
+
+// Custom render function with QueryClientProvider
+export const renderWithQueryClient = (
+  ui: ReactNode,
+  options?: RenderOptions
+) => render(ui, { wrapper, ...options });
 
 // Mock window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
